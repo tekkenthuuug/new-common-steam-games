@@ -1,17 +1,20 @@
 import { Heading } from '@chakra-ui/core';
 import React from 'react';
-import NewSiteAlert from 'src/components/NewSiteAlert';
 import Guide from 'src/components/Guide';
-import Layout from '../components/Layout';
+import GuideProvider from 'src/hooks/useGuideState';
+import Layout from 'src/components/Layout';
+import Profiles from 'src/components/Profiles';
 
-const Index = () => (
-  <Layout>
-    <NewSiteAlert />
-    <Heading textAlign='center' mt={2}>
-      Common steam games
-    </Heading>
-    <Guide />
-  </Layout>
-);
+const Index = () => {
+  return (
+    <Layout>
+      <GuideProvider>
+        <Heading textAlign='center'>Common steam games</Heading>
+        <Guide />
+        <Profiles />
+      </GuideProvider>
+    </Layout>
+  );
+};
 
 export default Index;

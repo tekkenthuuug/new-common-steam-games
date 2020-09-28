@@ -23,7 +23,7 @@ const TodoItem: React.FC<Props> = ({ children, isDone = false }) => {
       };
 
   return (
-    <Box display='flex' alignItems='center'>
+    <Box display='flex' alignItems='center' fontSize='lg'>
       <Icon name='check-circle' {...iconProps} />
       <Text ml={2} {...textProps}>
         {children}
