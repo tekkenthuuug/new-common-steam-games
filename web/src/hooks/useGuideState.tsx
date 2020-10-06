@@ -1,5 +1,5 @@
-import React, { useState, createContext, useContext } from 'react';
-import { LS_GUIDE_KEY } from 'src/utils/constants';
+import React, { useState, createContext, useContext, useEffect } from 'react';
+import { GUIDE_KEY } from 'src/utils/constants';
 import isServer from 'src/utils/isServer';
 
 interface IGuideContext {
@@ -12,15 +12,17 @@ interface IGuideContext {
 const GuideContext = createContext<IGuideContext | null>(null);
 
 const GuideProvider: React.FC = ({ children }) => {
-  const [showGuide, setShowGuide] = useState(
-    isServer() || !localStorage.getItem(LS_GUIDE_KEY)
-  );
+  const [showGuide, setShowGuide] = useState(true);
   const [blured, setBlured] = useState(true);
 
   const skipGuide = () => {
     setShowGuide(false);
-    localStorage.setItem(LS_GUIDE_KEY, 'true');
+    localStorage.setItem(GUIDE_KEY, 'true');
   };
+
+  useEffect(() => {
+    setShowGuide(!localStorage.getItem(GUIDE_KEY));
+  }, []);
 
   const unblur = () => setBlured(false);
 

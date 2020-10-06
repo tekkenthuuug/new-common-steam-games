@@ -6,7 +6,6 @@ import {
   Icon,
 } from '@chakra-ui/core';
 import React from 'react';
-import Layout from '../components/Layout';
 
 const NewSiteAlert = () => (
   <Alert status='warning'>
