@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Input } from '@chakra-ui/core';
+import { Box, Divider, Heading, IconButton, Input } from '@chakra-ui/core';
 import React, { useCallback, useReducer } from 'react';
 import profilesReducer, {
   profilesReducerInitial,
@@ -20,9 +20,13 @@ const Profiles: React.FC<Props> = ({}) => {
     [dispatch]
   );
 
-  const handleAddClick = useCallback(() => {
-    dispatch({ type: 'ADD_PROFILE' });
-  }, [dispatch]);
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      dispatch({ type: 'ADD_PROFILE' });
+    },
+    [dispatch]
+  );
 
   const deleteProfile = useCallback(
     (url: string) => {
@@ -32,8 +36,11 @@ const Profiles: React.FC<Props> = ({}) => {
   );
 
   return (
-    <Box>
-      <Box display='flex' alignItems='center' mt={4}>
+    <Box mt={4}>
+      <form
+        onSubmit={handleSubmit}
+        style={{ display: 'flex', alignItems: 'center' }}
+      >
         <Input
           placeholder='Profile URL / Steam ID'
           value={searchInput}
@@ -45,11 +52,11 @@ const Profiles: React.FC<Props> = ({}) => {
           isDisabled={!searchInput || profiles.includes(searchInput)}
           variantColor='blue'
           ml={4}
-          onClick={handleAddClick}
+          type='submit'
         />
-      </Box>
+      </form>
       <Divider my={4} />
-      {profiles &&
+      {profiles.length ? (
         profiles.map(profileUrl => (
           <ProfileCard
             // profileUrl is unique. Not using index since it will cause rerender of every component if delete / add
@@ -57,7 +64,12 @@ const Profiles: React.FC<Props> = ({}) => {
             profileUrl={profileUrl}
             deleteProfile={deleteProfile}
           />
-        ))}
+        ))
+      ) : (
+        <Box fontSize='22px' opacity={0.4} textAlign='center'>
+          Go ahead and and your friends profiles :)
+        </Box>
+      )}
     </Box>
   );
 };

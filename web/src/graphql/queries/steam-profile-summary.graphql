@@ -1,0 +1,14 @@
+query SteamProfileSummary($url: String!) {
+  steamProfileSummary(url: $url) {
+    steamId
+    summary {
+      avatar {
+        full
+      }
+      personaName
+      profileUrl
+      personaState
+      communityVisibilityState
+    }
+  }
+}

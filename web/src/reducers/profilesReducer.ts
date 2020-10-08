@@ -30,7 +30,7 @@ const profilesReducer = (
 
       return {
         ...state,
-        profiles: [...state.profiles, state.searchInput],
+        profiles: [state.searchInput, ...state.profiles],
         searchInput: '',
       };
     case 'DELETE_PROFILE':

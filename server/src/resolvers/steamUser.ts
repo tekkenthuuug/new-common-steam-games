@@ -1,20 +1,28 @@
 import { MyContext } from 'src/types';
-import { Arg, Ctx, Query, Resolver } from 'type-graphql';
+import { Arg, Ctx, Field, ObjectType, Query, Resolver } from 'type-graphql';
 import { OwnedGame, UserSummary } from 'type-steamapi';
+
+@ObjectType()
+class ProfileSummaryResponse {
+  @Field(() => UserSummary)
+  summary!: UserSummary;
+
+  @Field(() => Number)
+  steamId!: string;
+}
 
 @Resolver()
 export class SteamUserResolver {
-  @Query(() => UserSummary, { nullable: true })
+  @Query(() => ProfileSummaryResponse, { nullable: true })
   async steamProfileSummary(
     @Arg('url') url: string,
     @Ctx() { steam }: MyContext
-  ) {
+  ): Promise<ProfileSummaryResponse | null> {
     try {
       const steamId = await steam.resolve(url);
 
-      const profile = await steam.getUserSummary(steamId);
-
-      return profile ? profile[0] : null;
+      const profiles = await steam.getUserSummary(steamId);
+      return profiles ? { summary: profiles[0], steamId } : null;
     } catch (error) {
       console.log(error);
 

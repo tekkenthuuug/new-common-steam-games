@@ -4,6 +4,7 @@ import Guide from 'src/components/Guide';
 import GuideProvider from 'src/hooks/useGuideState';
 import Layout from 'src/components/Layout';
 import Profiles from 'src/components/Profiles';
+import { withApollo } from 'src/utils/withApollo';
 
 const Index = () => {
   return (
@@ -17,4 +18,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default withApollo({ ssr: true })(Index);
