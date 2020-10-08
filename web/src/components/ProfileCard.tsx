@@ -1,9 +1,12 @@
 import { Box, IconButton, Text, Image } from '@chakra-ui/core';
 import React from 'react';
 
-interface Props {}
+interface Props {
+  profileUrl: string;
+  deleteProfile?: (url: string) => void;
+}
 
-const ProfileCard: React.FC<Props> = ({}) => {
+const ProfileCard: React.FC<Props> = ({ profileUrl, deleteProfile }) => {
   return (
     <Box
       display='flex'
@@ -34,16 +37,19 @@ const ProfileCard: React.FC<Props> = ({}) => {
           src='https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/74/749690d6cd9902b40e500040dcdbc7cd390d7baf_full.jpg'
         ></Image>
       </Box>
-      <IconButton
-        position='absolute'
-        top={2}
-        right={2}
-        icon='delete'
-        variantColor='red'
-        aria-label='delete profile from list'
-      />
+      {deleteProfile && (
+        <IconButton
+          position='absolute'
+          top={2}
+          right={2}
+          icon='delete'
+          variantColor='red'
+          aria-label='delete profile from list'
+          onClick={() => deleteProfile(profileUrl)}
+        />
+      )}
     </Box>
   );
 };
 
-export default ProfileCard;
+export default React.memo(ProfileCard);
