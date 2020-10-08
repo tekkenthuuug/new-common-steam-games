@@ -16,7 +16,7 @@ const TodoItem: React.FC<Props> = ({ children, isDone = false }) => {
   const textProps: BoxProps = isDone
     ? {
         textDecoration: 'line-through',
-        color: 'black.500',
+        color: 'gray.500',
       }
     : {
         textDecoration: 'none',

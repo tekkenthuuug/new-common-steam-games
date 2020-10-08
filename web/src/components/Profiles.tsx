@@ -1,5 +1,7 @@
-import { Box, Divider, Heading, IconButton, Input } from '@chakra-ui/core';
+import { Box, Divider, IconButton, Input } from '@chakra-ui/core';
+import { FragmentsOnCompositeTypesRule } from 'graphql';
 import React, { useCallback, useReducer } from 'react';
+import { useGuide } from 'src/hooks/useGuide';
 import profilesReducer, {
   profilesReducerInitial,
 } from 'src/reducers/profilesReducer';
@@ -13,6 +15,8 @@ const Profiles: React.FC<Props> = ({}) => {
     profilesReducerInitial
   );
 
+  const { markTaskComplete } = useGuide()!;
+
   const handleInputChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       dispatch({ type: 'SET_SEARCH', payload: e.target.value });
@@ -23,9 +27,13 @@ const Profiles: React.FC<Props> = ({}) => {
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+      if (profiles.length >= 1) {
+        markTaskComplete('ADD_TWO');
+      }
       dispatch({ type: 'ADD_PROFILE' });
+      markTaskComplete('CLICK_PLUS');
     },
-    [dispatch]
+    [dispatch, profiles]
   );
 
   const deleteProfile = useCallback(
@@ -45,6 +53,7 @@ const Profiles: React.FC<Props> = ({}) => {
           placeholder='Profile URL / Steam ID'
           value={searchInput}
           onChange={handleInputChange}
+          onFocus={() => markTaskComplete('TYPE_URL')}
         />
         <IconButton
           aria-label='add profile'

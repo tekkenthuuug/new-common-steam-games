@@ -7,10 +7,10 @@ interface IInitial {
 
 type profilesReducerTypes = 'SET_SEARCH' | 'ADD_PROFILE' | 'DELETE_PROFILE';
 
-export const profilesReducerInitial = {
+export const profilesReducerInitial: IInitial = {
   profiles: [],
   searchInput: '',
-} as IInitial;
+};
 
 const deleteProfile = (profilesSlice: string[], url: string) => {
   return profilesSlice.filter(profileUrl => profileUrl !== url);

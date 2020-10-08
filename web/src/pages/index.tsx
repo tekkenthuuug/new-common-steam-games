@@ -1,7 +1,7 @@
 import { Heading } from '@chakra-ui/core';
 import React from 'react';
 import Guide from 'src/components/Guide';
-import GuideProvider from 'src/hooks/useGuideState';
+import GuideProvider from 'src/hooks/useGuide';
 import Layout from 'src/components/Layout';
 import Profiles from 'src/components/Profiles';
 import { withApollo } from 'src/utils/withApollo';
