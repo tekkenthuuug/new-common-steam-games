@@ -44,7 +44,7 @@ const AppCard: React.FC<Props> = ({ app }) => {
       role='group'
     >
       <CustomImg
-        src={`http://cdn.akamai.steamstatic.com/steam/apps/${app.appId}/header_292x136.jpg`}
+        src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${app.appId}/header.jpg`}
         style={{
           width: '100%',
           height: '100%',
