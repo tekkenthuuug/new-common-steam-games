@@ -45,13 +45,11 @@ const AppCard: React.FC<Props> = ({ app }) => {
     >
       <CustomImg
         src={`https://cdn.cloudflare.steamstatic.com/steam/apps/${app.appId}/header.jpg`}
-        style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          position: 'absolute',
-          zIndex: -1,
-        }}
+        w='100%'
+        h='100%'
+        objectFit='cover'
+        position='absolute'
+        zIndex={-1}
       />
       <ChakraLink
         href={`https://store.steampowered.com/app/${app.appId}/`}
