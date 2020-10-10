@@ -11,6 +11,10 @@ import {
 import React, { useEffect } from 'react';
 import { useSteamProfileSummaryQuery } from 'src/generated/graphql';
 import { ProfileType } from 'src/reducers/profilesReducer';
+import {
+  createHiddenProfileToast,
+  createProfileNotFoundToast,
+} from 'src/utils/toasts';
 
 interface Props {
   profileUrl: string;
@@ -35,15 +39,8 @@ const ProfileCard: React.FC<Props> = ({
     if (loading) return;
 
     if (!data || !data.steamProfileSummary) {
-      toast({
-        title: 'Profile not found',
-        description: `'${profileUrl}' was not found. Check spelling and try again.`,
-        position: 'bottom-left',
-        status: 'warning',
-        isClosable: true,
-        variant: 'left-accent',
-        duration: 10000,
-      });
+      toast(createProfileNotFoundToast(profileUrl));
+
       if (deleteProfile) {
         deleteProfile(profileUrl);
       }
@@ -54,15 +51,7 @@ const ProfileCard: React.FC<Props> = ({
     const { summary } = steamProfileSummary;
 
     if (summary.communityVisibilityState !== 3) {
-      toast({
-        title: `'${summary.personaName}' has a private profile`,
-        description: `We can't access '${summary.personaName}' game list`,
-        position: 'bottom-left',
-        status: 'warning',
-        isClosable: true,
-        variant: 'left-accent',
-        duration: 10000,
-      });
+      toast(createHiddenProfileToast(summary.personaName));
 
       if (deleteProfile) {
         deleteProfile(profileUrl);

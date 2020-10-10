@@ -2,6 +2,7 @@ import { useToast } from '@chakra-ui/core';
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { GuideItem, GuideTypesUnion } from 'src/types';
 import { GUIDE_INITIAL_DATA, GUIDE_KEY } from 'src/utils/constants';
+import { createCompletedGuideToast } from 'src/utils/toasts';
 
 interface IGuideContext {
   showGuide: boolean;
@@ -44,15 +45,10 @@ const GuideProvider: React.FC = ({ children }) => {
       })
     );
 
-    if (completedCount >= guideState.length) {
+    if (completedCount >= guideState.length && showGuide) {
       completeGuide();
 
-      toast({
-        title: "Great, you've completed the guide!",
-        variant: 'left-accent',
-        status: 'success',
-        position: 'bottom-left',
-      });
+      toast(createCompletedGuideToast());
     }
   };
 
