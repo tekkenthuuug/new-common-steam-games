@@ -29,7 +29,6 @@
     "express": "^4.17.1",
     "graphql": "^15.3.0",
     "reflect-metadata": "^0.1.13",
-    "steamapi": "^2.1.1",
     "type-graphql": "^1.0.0",
     "type-steamapi": "^0.9.46"
   }

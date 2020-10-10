@@ -42,7 +42,12 @@ const NavBar: React.FC<Props> = ({}) => {
             target='_blank'
             rel='noopener noreferrer'
           >
-            <Image ml={4} src='/img/github-mark-32px.png' height={28} />
+            <Image
+              ml={4}
+              alt='github logo'
+              src='/img/github-mark-32px.png'
+              height={28}
+            />
           </ChakraLink>
         </ListItem>
       </List>

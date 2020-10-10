@@ -22,10 +22,9 @@ export class SteamUserResolver {
       const steamId = await steam.resolve(url);
 
       const profiles = await steam.getUserSummary(steamId);
+
       return profiles ? { summary: profiles[0], steamId } : null;
     } catch (error) {
-      console.log(error);
-
       return null;
     }
   }

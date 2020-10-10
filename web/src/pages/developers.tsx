@@ -6,6 +6,7 @@ import {
   ListItem,
   Box,
 } from '@chakra-ui/core';
+import Head from 'next/head';
 import React from 'react';
 import Layout from 'src/components/Layout';
 
@@ -14,6 +15,13 @@ interface Props {}
 const Developers: React.FC<Props> = ({}) => {
   return (
     <Layout>
+      <Head>
+        <title>CSG | Developers</title>
+        <meta
+          name='Description'
+          content='Common steam games is based on type-steamapi package, that is created for easier interactions with Steam Web API.'
+        />
+      </Head>
       <Heading>Developers</Heading>
       <Text mt={2}>
         If you are interested in creating app, that envolves interactions with
