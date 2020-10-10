@@ -17,7 +17,7 @@ interface IGuideContext {
 const GuideContext = createContext<IGuideContext | null>(null);
 
 const GuideProvider: React.FC = ({ children }) => {
-  const [showGuide, setShowGuide] = useState(true);
+  const [showGuide, setShowGuide] = useState(false);
   const [blured, setBlured] = useState(true);
   const [guideState, setGuideState] = useState(GUIDE_INITIAL_DATA);
 
