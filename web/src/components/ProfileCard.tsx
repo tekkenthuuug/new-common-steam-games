@@ -10,16 +10,23 @@ import {
 } from '@chakra-ui/core';
 import React, { useEffect } from 'react';
 import { useSteamProfileSummaryQuery } from 'src/generated/graphql';
+import { ProfileType } from 'src/reducers/profilesReducer';
 
 interface Props {
   profileUrl: string;
   deleteProfile?: (url: string) => void;
+  addProfile: (profile: ProfileType) => void;
 }
 
-const ProfileCard: React.FC<Props> = ({ profileUrl, deleteProfile }) => {
+const ProfileCard: React.FC<Props> = ({
+  profileUrl,
+  deleteProfile,
+  addProfile,
+}) => {
   const { loading, data } = useSteamProfileSummaryQuery({
     variables: { url: profileUrl },
   });
+
   const toast = useToast();
 
   let body = null;
@@ -60,7 +67,11 @@ const ProfileCard: React.FC<Props> = ({ profileUrl, deleteProfile }) => {
       if (deleteProfile) {
         deleteProfile(profileUrl);
       }
+
+      return;
     }
+
+    addProfile({ ...steamProfileSummary, for: profileUrl } as ProfileType);
   }, [data]);
 
   if (loading) {
@@ -82,11 +93,7 @@ const ProfileCard: React.FC<Props> = ({ profileUrl, deleteProfile }) => {
     body = (
       <>
         <Box ml='112px'>
-          <ChakraLink
-            href={profileUrl}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
+          <ChakraLink href={profileUrl} isExternal>
             <Text fontSize='xl' color='blue.700' fontWeight='bold'>
               {personaName}
             </Text>

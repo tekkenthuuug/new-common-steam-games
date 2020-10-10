@@ -1,0 +1,5 @@
+query SteamCommonApps($urls: [String!]!) {
+  steamCommonApps(urls: $urls) {
+    ...CommonApp
+  }
+}

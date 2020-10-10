@@ -83,6 +83,24 @@ export type OwnedGame = {
   imgLogoUrl: Scalars['String'];
 };
 
+export type CommonAppFragment = (
+  { __typename?: 'OwnedGame' }
+  & Pick<OwnedGame, 'name' | 'appId' | 'imgLogoUrl' | 'imgIconUrl'>
+);
+
+export type SteamCommonAppsQueryVariables = Exact<{
+  urls: Array<Scalars['String']>;
+}>;
+
+
+export type SteamCommonAppsQuery = (
+  { __typename?: 'Query' }
+  & { steamCommonApps?: Maybe<Array<(
+    { __typename?: 'OwnedGame' }
+    & CommonAppFragment
+  )>> }
+);
+
 export type SteamProfileSummaryQueryVariables = Exact<{
   url: Scalars['String'];
 }>;
@@ -104,7 +122,47 @@ export type SteamProfileSummaryQuery = (
   )> }
 );
 
+export const CommonAppFragmentDoc = gql`
+    fragment CommonApp on OwnedGame {
+  name
+  appId
+  imgLogoUrl
+  imgIconUrl
+}
+    `;
+export const SteamCommonAppsDocument = gql`
+    query SteamCommonApps($urls: [String!]!) {
+  steamCommonApps(urls: $urls) {
+    ...CommonApp
+  }
+}
+    ${CommonAppFragmentDoc}`;
 
+/**
+ * __useSteamCommonAppsQuery__
+ *
+ * To run a query within a React component, call `useSteamCommonAppsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSteamCommonAppsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSteamCommonAppsQuery({
+ *   variables: {
+ *      urls: // value for 'urls'
+ *   },
+ * });
+ */
+export function useSteamCommonAppsQuery(baseOptions?: Apollo.QueryHookOptions<SteamCommonAppsQuery, SteamCommonAppsQueryVariables>) {
+        return Apollo.useQuery<SteamCommonAppsQuery, SteamCommonAppsQueryVariables>(SteamCommonAppsDocument, baseOptions);
+      }
+export function useSteamCommonAppsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SteamCommonAppsQuery, SteamCommonAppsQueryVariables>) {
+          return Apollo.useLazyQuery<SteamCommonAppsQuery, SteamCommonAppsQueryVariables>(SteamCommonAppsDocument, baseOptions);
+        }
+export type SteamCommonAppsQueryHookResult = ReturnType<typeof useSteamCommonAppsQuery>;
+export type SteamCommonAppsLazyQueryHookResult = ReturnType<typeof useSteamCommonAppsLazyQuery>;
+export type SteamCommonAppsQueryResult = Apollo.QueryResult<SteamCommonAppsQuery, SteamCommonAppsQueryVariables>;
 export const SteamProfileSummaryDocument = gql`
     query SteamProfileSummary($url: String!) {
   steamProfileSummary(url: $url) {

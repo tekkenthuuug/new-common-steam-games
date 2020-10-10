@@ -1,42 +1,62 @@
+import { ProfileSummaryResponse } from 'src/generated/graphql';
 import { ActionType } from 'src/types';
 
+export type ProfileType = (ProfileSummaryResponse & { for: string })
+
 interface IInitial {
-  profiles: string[];
+  profileUrls: string[];
+  profiles: ProfileType[],
+  isLoading: boolean,
   searchInput: string;
 }
 
-type profilesReducerTypes = 'SET_SEARCH' | 'ADD_PROFILE' | 'DELETE_PROFILE';
+type ProfilesReducerTypes = 'SET_SEARCH' | 'ADD_PROFILE_URL' | 'ADD_PROFILE' | 'DELETE_PROFILE';
 
 export const profilesReducerInitial: IInitial = {
+  profileUrls: [],
   profiles: [],
+  isLoading: false,
   searchInput: '',
 };
 
-const deleteProfile = (profilesSlice: string[], url: string) => {
-  return profilesSlice.filter(profileUrl => profileUrl !== url);
+const deleteProfileUrl = (profileUrlsSlice: string[], url: string) => {
+  return profileUrlsSlice.filter(profileUrl => profileUrl !== url);
 };
+
+const deleteProfile = (profileSlice: ProfileType[], url: string) => {
+  return profileSlice.filter(profile => profile.for !== url);
+}
 
 const profilesReducer = (
   state = profilesReducerInitial,
-  action: ActionType<profilesReducerTypes>
+  action: ActionType<ProfilesReducerTypes>
 ): IInitial => {
   switch (action.type) {
     case 'SET_SEARCH':
       return { ...state, searchInput: action.payload };
     case 'ADD_PROFILE':
-      if (state.profiles.includes(state.searchInput)) {
+      return {
+        ...state,
+        isLoading: false,
+        profiles: [...state.profiles, action.payload]
+      }
+    case 'ADD_PROFILE_URL':
+      if (state.profileUrls.includes(state.searchInput)) {
         return state;
       }
 
       return {
         ...state,
-        profiles: [state.searchInput, ...state.profiles],
+        profileUrls: [state.searchInput, ...state.profileUrls],
+        isLoading: true,
         searchInput: '',
       };
     case 'DELETE_PROFILE':
       return {
         ...state,
-        profiles: deleteProfile(state.profiles, action.payload),
+        isLoading: false,
+        profileUrls: deleteProfileUrl(state.profileUrls, action.payload),
+        profiles: deleteProfile(state.profiles, action.payload)
       };
     default:
       return state;

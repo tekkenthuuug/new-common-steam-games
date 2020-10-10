@@ -1,0 +1,6 @@
+fragment CommonApp on OwnedGame {
+  name
+  appId
+  imgLogoUrl
+  imgIconUrl
+}

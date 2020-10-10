@@ -1,19 +1,20 @@
 import { Box, Divider, IconButton, Input } from '@chakra-ui/core';
-import { FragmentsOnCompositeTypesRule } from 'graphql';
 import React, { useCallback, useReducer } from 'react';
 import { useGuide } from 'src/hooks/useGuide';
 import profilesReducer, {
   profilesReducerInitial,
+  ProfileType,
 } from 'src/reducers/profilesReducer';
+import FindCGButton from './FindCGButton';
 import ProfileCard from './ProfileCard';
 
 interface Props {}
 
 const Profiles: React.FC<Props> = ({}) => {
-  const [{ searchInput, profiles }, dispatch] = useReducer(
-    profilesReducer,
-    profilesReducerInitial
-  );
+  const [
+    { searchInput, profileUrls, isLoading, profiles },
+    dispatch,
+  ] = useReducer(profilesReducer, profilesReducerInitial);
 
   const { markTaskComplete } = useGuide()!;
 
@@ -27,13 +28,13 @@ const Profiles: React.FC<Props> = ({}) => {
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      if (profiles.length >= 1) {
+      if (profileUrls.length >= 1) {
         markTaskComplete('ADD_TWO');
       }
-      dispatch({ type: 'ADD_PROFILE' });
+      dispatch({ type: 'ADD_PROFILE_URL' });
       markTaskComplete('CLICK_PLUS');
     },
-    [dispatch, profiles]
+    [dispatch, profileUrls]
   );
 
   const deleteProfile = useCallback(
@@ -42,6 +43,10 @@ const Profiles: React.FC<Props> = ({}) => {
     },
     [dispatch]
   );
+
+  const addProfile = useCallback((profile: ProfileType) => {
+    dispatch({ type: 'ADD_PROFILE', payload: profile });
+  }, []);
 
   return (
     <Box mt={4}>
@@ -58,25 +63,31 @@ const Profiles: React.FC<Props> = ({}) => {
         <IconButton
           aria-label='add profile'
           icon='add'
-          isDisabled={!searchInput || profiles.includes(searchInput)}
+          isDisabled={!searchInput || profileUrls.includes(searchInput)}
           variantColor='blue'
           ml={4}
           type='submit'
         />
       </form>
+      {profileUrls.length >= 2 && (
+        <FindCGButton isLoading={isLoading} profiles={profiles}>
+          Find common
+        </FindCGButton>
+      )}
       <Divider my={4} />
-      {profiles.length ? (
-        profiles.map(profileUrl => (
+      {profileUrls.length ? (
+        profileUrls.map(profileUrl => (
           <ProfileCard
             // profileUrl is unique. Not using index since it will cause rerender of every component if delete / add
             key={profileUrl}
             profileUrl={profileUrl}
             deleteProfile={deleteProfile}
+            addProfile={addProfile}
           />
         ))
       ) : (
         <Box fontSize='22px' opacity={0.4} textAlign='center'>
-          Go ahead and and your friends profiles :)
+          Go ahead and and your friends profiles above
         </Box>
       )}
     </Box>
