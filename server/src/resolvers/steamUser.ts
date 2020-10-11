@@ -23,6 +23,16 @@ export class SteamUserResolver {
 
       const profiles = await steam.getUserSummary(steamId);
 
+      try {
+        // would be cached for future use
+        await steam.getUserOwnedGames(steamId);
+      } catch {
+        if (profiles) {
+          // games hidden
+          profiles[0].communityVisibilityState = 1;
+        }
+      }
+
       return profiles ? { summary: profiles[0], steamId } : null;
     } catch (error) {
       return null;
