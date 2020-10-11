@@ -66,7 +66,7 @@ const ProfileCard: React.FC<Props> = ({
   if (loading) {
     body = (
       <Box width='100%' textAlign='center'>
-        <Spinner size='lg' />;
+        <Spinner size='lg' />
       </Box>
     );
   } else if (data && data.steamProfileSummary) {
