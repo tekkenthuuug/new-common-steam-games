@@ -7,7 +7,7 @@ interface Props {}
 
 const Layout: React.FC<Props> = ({ children }) => {
   return (
-    <Box maxWidth='800px' width='100%' mx='auto'>
+    <Box maxWidth='800px' width='95%' mx='auto'>
       <Box as='header' my={3}>
         <NavBar />
         <NewSiteAlert />
