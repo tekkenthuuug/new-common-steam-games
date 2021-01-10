@@ -81,7 +81,7 @@ const ProfileCard: React.FC<Props> = ({
 
     body = (
       <>
-        <Box ml='112px'>
+        <Box ml={['20px', '40px', '60px', '112px']}>
           <ChakraLink href={profileUrl} isExternal>
             <Text fontSize='xl' color='blue.700' fontWeight='bold'>
               {personaName}
@@ -114,6 +114,7 @@ const ProfileCard: React.FC<Props> = ({
         </Box>
         <Box ml='auto' mr='112px'>
           <Image
+            display={['none', 'initial']}
             borderRadius={6}
             boxShadow='lg'
             maxHeight={160}

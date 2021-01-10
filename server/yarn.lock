@@ -2102,11 +2102,6 @@ spdx-license-ids@^3.0.0:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-steamapi@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/steamapi/-/steamapi-2.1.1.tgz#e9bb47a67eb900839775fb86d8429c7904fde057"
-  integrity sha512-GkbSwk2GmtwQpYdB5Wjjt5dXANrhWct5JJnXZ1NZ6FLnb4VM0nV/H62yzruDBoAY4NlsTyYMc8fkRZMII8wGWg==
-
 streamsearch@0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/streamsearch/-/streamsearch-0.1.2.tgz#808b9d0e56fc273d809ba57338e929919a1a9f1a"
